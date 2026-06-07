@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Northern Province Rides - Driver & Customer App | Chaiwa Cars</title>
+    <title>Northern Province Rides - Secure Driver & Admin Login | Chaiwa Cars</title>
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Leaflet Routing Machine for routes -->
+    <!-- Leaflet Routing Machine -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-    <!-- Leaflet Marker Cluster for better map visualization -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
@@ -59,32 +55,7 @@
             width: 4px;
         }
 
-        /* Role Selector */
-        .role-selector {
-            display: flex;
-            gap: 10px;
-            padding: 10px;
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .role-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #f1f5f9;
-            color: #64748b;
-        }
-
-        .role-btn.active {
-            background: linear-gradient(135deg, #0f3b2c, #0a1e2f);
-            color: white;
-        }
-
+        /* Header */
         .header {
             background: linear-gradient(135deg, #0a1e2f 0%, #0f3b2c 100%);
             color: white;
@@ -117,26 +88,96 @@
             cursor: pointer;
         }
 
-        .location-info {
-            font-size: 0.7rem;
-            opacity: 0.9;
-            margin-top: 6px;
+        /* Login Screen */
+        .login-container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 400px;
         }
 
+        .login-card {
+            background: white;
+            border-radius: 32px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .login-title i {
+            font-size: 3rem;
+            color: #f5b042;
+            margin-bottom: 12px;
+        }
+
+        .input-group {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .input-group i {
+            color: #0f3b2c;
+            width: 24px;
+        }
+
+        input, select {
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0f3b2c 0%, #0a1e2f 100%);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+        }
+
+        /* Map Container */
         .map-container {
             margin: 12px;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            height: 280px;
+            height: 300px;
             border: 2px solid white;
         }
 
         #map, #driverMap {
             height: 100%;
             width: 100%;
+            background: #e2e8f0;
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -151,17 +192,11 @@
             text-align: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .stat-card:active {
-            transform: scale(0.95);
         }
 
         .stat-card i {
             font-size: 1.3rem;
             color: #f5b042;
-            margin-bottom: 4px;
         }
 
         .stat-card .value {
@@ -175,7 +210,8 @@
             color: #64748b;
         }
 
-        .booking-card, .admin-card, .driver-card {
+        /* Booking Card */
+        .booking-card, .driver-card, .admin-card {
             background: white;
             margin: 12px;
             padding: 16px;
@@ -193,54 +229,14 @@
             color: #0a1e2f;
         }
 
-        .input-group {
-            background: #f8fafc;
-            border-radius: 20px;
-            padding: 10px 14px;
-            margin-bottom: 10px;
+        .price-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 10px;
+            border-radius: 16px;
             display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .input-group i {
-            color: #0f3b2c;
-            width: 22px;
-        }
-
-        input, select {
-            border: none;
-            background: transparent;
-            width: 100%;
-            outline: none;
-            font-size: 0.85rem;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #0f3b2c 0%, #0a1e2f 100%);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #f5b042, #ea580c);
+            justify-content: space-between;
+            margin: 12px 0;
+            font-weight: 600;
         }
 
         .nearby-list {
@@ -259,14 +255,9 @@
             padding: 10px;
             border-bottom: 1px solid #e2e8f0;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
-        .vehicle-item:hover, .ride-request-item:hover {
-            background: #f8fafc;
-        }
-
-        .vehicle-info, .ride-info {
+        .vehicle-info {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -280,7 +271,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
             color: white;
         }
 
@@ -289,20 +279,7 @@
             background: #e2e8f0;
             padding: 3px 8px;
             border-radius: 20px;
-            font-weight: 600;
         }
-
-        .status-badge {
-            font-size: 0.65rem;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .status-pending { background: #fef3c7; color: #d97706; }
-        .status-accepted { background: #dcfce7; color: #16a34a; }
-        .status-arrived { background: #dbeafe; color: #2563eb; }
-        .status-completed { background: #e6e6e6; color: #4b5563; }
 
         .trip-panel {
             background: #f0fdf4;
@@ -311,19 +288,13 @@
             border-radius: 20px;
             border-left: 4px solid #22c55e;
             display: none;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .bottom-nav {
             display: flex;
             background: white;
             border-top: 1px solid #e2e8f0;
-            padding: 6px 12px;
+            padding: 8px 12px;
             gap: 15px;
             justify-content: space-around;
         }
@@ -333,22 +304,11 @@
             padding: 6px;
             cursor: pointer;
             color: #64748b;
-            transition: color 0.2s;
         }
 
         .nav-item.active {
             color: #0f3b2c;
             font-weight: 600;
-        }
-
-        .nav-item i {
-            font-size: 1.1rem;
-            margin-bottom: 3px;
-        }
-
-        .nav-item span {
-            font-size: 0.6rem;
-            display: block;
         }
 
         .toast {
@@ -361,44 +321,13 @@
             padding: 8px 16px;
             border-radius: 40px;
             font-size: 0.7rem;
-            z-index: 1000;
+            z-index: 2000;
             display: none;
             white-space: nowrap;
         }
 
-        .admin-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #0a1e2f;
-            color: white;
-            padding: 10px 14px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
         .hidden {
             display: none;
-        }
-
-        .driver-list {
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .driver-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 0.75rem;
         }
 
         .province-banner {
@@ -428,7 +357,6 @@
             font-weight: 600;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
         }
 
         .district-chip.active {
@@ -436,21 +364,11 @@
             color: white;
         }
 
-        .route-info {
-            background: white;
-            margin: 8px 12px;
-            padding: 10px;
-            border-radius: 16px;
-            font-size: 0.7rem;
-            display: none;
-        }
-
         .live-badge {
             background: #22c55e;
             padding: 2px 6px;
             border-radius: 12px;
             font-size: 0.6rem;
-            margin-left: 6px;
             animation: pulse 1.5s infinite;
         }
 
@@ -459,27 +377,24 @@
             50% { opacity: 0.6; }
         }
 
-        .online-indicator {
-            width: 10px;
-            height: 10px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-            animation: pulse 1.5s infinite;
+        .driver-list {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .driver-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.75rem;
         }
     </style>
 </head>
 <body>
 <div class="phone">
-    <!-- Role Selector -->
-    <div class="role-selector">
-        <button class="role-btn active" onclick="switchRole('customer')">👤 Customer</button>
-        <button class="role-btn" onclick="switchRole('driver')">🚗 Driver</button>
-        <button class="role-btn" onclick="switchRole('admin')">👑 Admin</button>
-    </div>
-
-    <!-- Customer App -->
+    <!-- CUSTOMER APP (No Login Required) -->
     <div id="customerApp">
         <div class="province-banner">
             <i class="fas fa-map-marked-alt"></i> NORTHERN PROVINCE, ZAMBIA | Chaiwa Cars Available
@@ -487,7 +402,7 @@
         <div class="header">
             <div class="header-top">
                 <div class="logo"><i class="fas fa-motorcycle"></i> Northern Rides</div>
-                <div class="badge"><i class="fas fa-route"></i> Route Finder</div>
+                <div class="badge" onclick="showDriverLogin()"><i class="fas fa-user-shield"></i> Driver/Admin</div>
             </div>
             <div class="location-info">
                 <i class="fas fa-location-dot"></i> <span id="userLocationDisplay">Northern Province, Zambia</span>
@@ -510,67 +425,60 @@
             <div class="map-container"><div id="customerMap"></div></div>
             
             <div class="stats-grid">
-                <div class="stat-card" onclick="showAllVehicles()">
-                    <i class="fas fa-motorcycle"></i>
-                    <div class="value" id="nearbyCount">0</div>
-                    <div class="label">Bikes</div>
-                </div>
-                <div class="stat-card" onclick="showCars()">
-                    <i class="fas fa-car"></i>
-                    <div class="value" id="carCount">0</div>
-                    <div class="label">Chaiwa Cars</div>
-                </div>
-                <div class="stat-card" onclick="centerOnProvince()">
-                    <i class="fas fa-crosshairs"></i>
-                    <div class="value" id="etaDisplay">~5</div>
-                    <div class="label">Min ETA</div>
-                </div>
+                <div class="stat-card" onclick="filterBikes()"><i class="fas fa-motorcycle"></i><div class="value" id="bikeCount">0</div><div class="label">Bikes</div></div>
+                <div class="stat-card" onclick="filterCars()"><i class="fas fa-car"></i><div class="value" id="carCount">0</div><div class="label">Chaiwa Cars</div></div>
+                <div class="stat-card" onclick="centerMap()"><i class="fas fa-crosshairs"></i><div class="value" id="etaDisplay">~5</div><div class="label">Min ETA</div></div>
             </div>
             
             <div class="booking-card">
                 <div class="section-title"><i class="fas fa-ticket-alt"></i> Book Your Ride</div>
-                <div class="input-group">
-                    <i class="fas fa-circle-dot"></i>
-                    <input type="text" id="pickup" placeholder="Pickup Location" value="Kasama Town Centre">
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-flag-checkered"></i>
-                    <input type="text" id="dropoff" placeholder="Dropoff Location" value="Mbala Town">
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-motorcycle"></i>
-                    <select id="vehicleType" onchange="filterVehicles()">
-                        <option value="all">🚀 All Vehicles</option>
-                        <option value="bike">🏍️ Motor Bike</option>
-                        <option value="car">🚗 Chaiwa Car</option>
-                    </select>
-                </div>
-                <div class="price-box" id="priceBox">
-                    <span>💰 Estimated Fare</span>
-                    <strong id="estPrice">ZMW 25 - 85</strong>
-                </div>
-                <button class="btn-primary" onclick="requestRide()">
-                    <i class="fas fa-location-dot"></i> Request Ride
-                </button>
+                <div class="input-group"><i class="fas fa-circle-dot"></i><input type="text" id="pickup" placeholder="Pickup" value="Kasama Town Centre"></div>
+                <div class="input-group"><i class="fas fa-flag-checkered"></i><input type="text" id="dropoff" placeholder="Dropoff" value="Mbala Town"></div>
+                <div class="input-group"><i class="fas fa-car"></i><select id="vehicleType"><option value="all">All Vehicles</option><option value="bike">🏍️ Bike</option><option value="car">🚗 Chaiwa Car</option></select></div>
+                <div class="price-box"><span>💰 Estimated Fare</span><strong id="estPrice">ZMW 25 - 85</strong></div>
+                <button class="btn-primary" onclick="requestRide()"><i class="fas fa-location-dot"></i> Request Ride</button>
             </div>
-            
-            <div id="routeInfo" class="route-info"></div>
             
             <div class="nearby-list">
                 <div class="section-title"><i class="fas fa-taxi"></i> Nearby Vehicles</div>
-                <div id="vehiclesListContainer">Loading vehicles...</div>
+                <div id="vehiclesList">Loading...</div>
             </div>
             <div id="tripPanel" class="trip-panel"></div>
         </div>
         
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="customerSwitchTab('home')"><i class="fas fa-home"></i><span>Home</span></div>
-            <div class="nav-item" onclick="customerSwitchTab('rides')"><i class="fas fa-history"></i><span>Rides</span></div>
-            <div class="nav-item" onclick="customerSwitchTab('support')"><i class="fas fa-headset"></i><span>Support</span></div>
+            <div class="nav-item active" onclick="switchTab('home')"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item" onclick="switchTab('rides')"><i class="fas fa-history"></i><span>Rides</span></div>
+            <div class="nav-item" onclick="switchTab('support')"><i class="fas fa-headset"></i><span>Support</span></div>
         </div>
     </div>
 
-    <!-- Driver App -->
+    <!-- LOGIN SCREEN (Driver/Admin) -->
+    <div id="loginScreen" class="hidden">
+        <div class="province-banner">
+            <i class="fas fa-lock"></i> SECURE LOGIN | Driver & Admin Portal
+        </div>
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-title">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Secure Login</h3>
+                    <p style="font-size:0.7rem; color:#64748b;">Driver or Admin Access Only</p>
+                </div>
+                <div class="input-group"><i class="fas fa-phone"></i><input type="tel" id="loginPhone" placeholder="Phone Number" value="+260977123456"></div>
+                <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="loginPassword" placeholder="Password" value="driver123"></div>
+                <select id="loginRole" class="input-group">
+                    <option value="driver">🚗 Driver Login</option>
+                    <option value="admin">👑 Admin Login</option>
+                </select>
+                <button class="btn-primary" onclick="processLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <button class="btn-primary btn-danger" style="margin-top:8px; background:#64748b;" onclick="closeLogin()"><i class="fas fa-arrow-left"></i> Back to Customer App</button>
+                <p style="text-align:center; margin-top:16px; font-size:0.65rem; color:#64748b;">Demo Driver: +260977123456 / driver123<br>Demo Admin: +260970000001 / admin123</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRIVER APP (After Login) -->
     <div id="driverApp" class="hidden">
         <div class="province-banner">
             <i class="fas fa-taxi"></i> DRIVER MODE | Chaiwa Cars Fleet
@@ -578,129 +486,91 @@
         <div class="header">
             <div class="header-top">
                 <div class="logo"><i class="fas fa-id-card"></i> Driver Portal</div>
-                <div class="badge" id="driverStatusBadge" onclick="toggleDriverOnline()">🟢 Go Online</div>
+                <div class="badge" onclick="logoutDriver()"><i class="fas fa-sign-out-alt"></i> Logout</div>
             </div>
             <div class="location-info">
-                <i class="fas fa-user"></i> <span id="driverNameDisplay">Kelvin Banda</span>
-                <span id="driverOnlineStatus" class="live-badge">🟢 ONLINE</span>
+                <i class="fas fa-user"></i> <span id="driverNameDisplay">Loading...</span>
+                <button class="badge" onclick="toggleOnline()" id="onlineToggleBtn" style="margin-left:8px;">🟢 Online</button>
             </div>
         </div>
-        
         <div class="app-content">
             <div class="map-container"><div id="driverMap"></div></div>
-            
             <div class="stats-grid">
-                <div class="stat-card">
-                    <i class="fas fa-money-bill"></i>
-                    <div class="value" id="driverEarnings">ZMW 2,450</div>
-                    <div class="label">Today's Earnings</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-check-circle"></i>
-                    <div class="value" id="driverRides">18</div>
-                    <div class="label">Today's Rides</div>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-star"></i>
-                    <div class="value" id="driverRating">4.9</div>
-                    <div class="label">Rating</div>
-                </div>
+                <div class="stat-card"><i class="fas fa-money-bill"></i><div class="value" id="driverEarnings">ZMW 0</div><div class="label">Earnings</div></div>
+                <div class="stat-card"><i class="fas fa-check-circle"></i><div class="value" id="driverRides">0</div><div class="label">Today's Rides</div></div>
+                <div class="stat-card"><i class="fas fa-star"></i><div class="value" id="driverRating">5.0</div><div class="label">Rating</div></div>
             </div>
             
-            <!-- Ride Requests Section -->
             <div class="driver-card">
-                <div class="section-title"><i class="fas fa-bell"></i> Ride Requests <span id="requestCount" class="badge" style="background:#22c55e; color:white;">0</span></div>
-                <div id="rideRequestsList" class="driver-list">
-                    <div style="text-align:center; padding:20px;">No ride requests yet</div>
-                </div>
+                <div class="section-title"><i class="fas fa-bell"></i> Ride Requests <span id="requestCount" class="badge" style="background:#22c55e;">0</span></div>
+                <div id="rideRequestsList" class="driver-list">Loading requests...</div>
             </div>
             
-            <!-- Active Ride Section -->
             <div id="activeRideCard" class="driver-card" style="display:none;">
                 <div class="section-title"><i class="fas fa-play-circle"></i> Active Ride</div>
                 <div id="activeRideInfo"></div>
-                <div class="input-group"><i class="fas fa-map-pin"></i><input type="text" id="customerLocation" placeholder="Customer Location" readonly></div>
-                <div class="stats-grid" style="margin-top:10px;">
-                    <button class="btn-primary btn-success" onclick="updateRideStatus('arrived')"><i class="fas fa-flag-checkered"></i> Arrived</button>
-                    <button class="btn-primary btn-warning" onclick="updateRideStatus('started')"><i class="fas fa-play"></i> Start Ride</button>
+                <div class="stats-grid">
+                    <button class="btn-primary" style="background:#22c55e;" onclick="updateRideStatus('arrived')"><i class="fas fa-flag-checkered"></i> Arrived</button>
+                    <button class="btn-primary" style="background:#f5b042;" onclick="updateRideStatus('started')"><i class="fas fa-play"></i> Start</button>
                     <button class="btn-primary" onclick="updateRideStatus('completed')"><i class="fas fa-check"></i> Complete</button>
                 </div>
             </div>
-            
-            <!-- Navigation Controls -->
-            <div class="driver-card">
-                <div class="section-title"><i class="fas fa-map-marked-alt"></i> Quick Actions</div>
-                <div class="stats-grid">
-                    <button class="btn-primary" onclick="centerOnMyLocation()"><i class="fas fa-crosshairs"></i> My Location</button>
-                    <button class="btn-primary btn-success" onclick="showNearbyCustomers()"><i class="fas fa-users"></i> Nearby Customers</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="bottom-nav">
-            <div class="nav-item active" onclick="driverSwitchTab('dashboard')"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
-            <div class="nav-item" onclick="driverSwitchTab('history')"><i class="fas fa-history"></i><span>History</span></div>
-            <div class="nav-item" onclick="driverSwitchTab('earnings')"><i class="fas fa-chart-line"></i><span>Earnings</span></div>
         </div>
     </div>
 
-    <!-- Admin Panel -->
-    <div id="adminPanel" class="hidden">
-        <div class="province-banner">
-            <i class="fas fa-shield-alt"></i> ADMIN PANEL | Manage Fleet
-        </div>
+    <!-- ADMIN APP (After Login) -->
+    <div id="adminApp" class="hidden">
+        <div class="province-banner"><i class="fas fa-shield-alt"></i> ADMIN PANEL | Northern Province</div>
         <div class="header">
-            <div class="header-top">
-                <div class="logo"><i class="fas fa-shield-alt"></i> Admin Dashboard</div>
-                <div class="badge" onclick="closeAdminPanel()"><i class="fas fa-times"></i> Close</div>
-            </div>
+            <div class="header-top"><div class="logo"><i class="fas fa-shield-alt"></i> Admin Dashboard</div><div class="badge" onclick="logoutDriver()">Logout</div></div>
         </div>
         <div class="app-content">
             <div class="admin-card">
                 <div class="section-title"><i class="fas fa-plus-circle"></i> Register New Vehicle</div>
-                <div class="input-group"><i class="fas fa-motorcycle"></i><input type="text" id="regNumber" placeholder="Registration"></div>
-                <div class="input-group"><i class="fas fa-user"></i><input type="text" id="driverName" placeholder="Driver Name"></div>
-                <div class="input-group"><i class="fas fa-phone"></i><input type="text" id="driverPhone" placeholder="Phone"></div>
-                <div class="input-group"><i class="fas fa-car"></i>
-                    <select id="vehicleTypeReg">
-                        <option value="bike">🏍️ Motor Bike</option>
-                        <option value="car">🚗 Chaiwa Car</option>
-                    </select>
-                </div>
-                <div class="input-group"><i class="fas fa-map-marker-alt"></i>
-                    <select id="vehicleDistrict">
-                        <option value="kasama">Kasama</option><option value="mbala">Mbala</option>
-                        <option value="mpulungu">Mpulungu</option><option value="luwingu">Luwingu</option>
-                        <option value="chinsali">Chinsali</option><option value="isoka">Isoka</option>
-                        <option value="nakonde">Nakonde</option><option value="mungwi">Mungwi</option>
-                    </select>
-                </div>
-                <button class="btn-primary" onclick="registerVehicle()"><i class="fas fa-save"></i> Register</button>
+                <div class="input-group"><i class="fas fa-motorcycle"></i><input type="text" id="regNum" placeholder="Registration"></div>
+                <div class="input-group"><i class="fas fa-user"></i><input type="text" id="driverFullName" placeholder="Driver Name"></div>
+                <div class="input-group"><i class="fas fa-phone"></i><input type="text" id="driverPhoneNum" placeholder="Phone Number"></div>
+                <div class="input-group"><i class="fas fa-key"></i><input type="password" id="driverPassword" placeholder="Password" value="driver123"></div>
+                <div class="input-group"><i class="fas fa-car"></i><select id="vehicleTypeReg"><option value="bike">🏍️ Bike</option><option value="car">🚗 Chaiwa Car</option></select></div>
+                <div class="input-group"><i class="fas fa-map-marker-alt"></i><select id="vehicleDistrict"><option value="kasama">Kasama</option><option value="mbala">Mbala</option><option value="mpulungu">Mpulungu</option><option value="luwingu">Luwingu</option><option value="chinsali">Chinsali</option><option value="isoka">Isoka</option><option value="nakonde">Nakonde</option><option value="mungwi">Mungwi</option></select></div>
+                <button class="btn-primary" onclick="registerVehicle()"><i class="fas fa-save"></i> Register Vehicle</button>
             </div>
-            <div class="admin-card">
-                <div class="section-title"><i class="fas fa-list"></i> All Vehicles</div>
-                <div id="vehiclesListAdmin" class="driver-list"></div>
-            </div>
-            <div class="admin-card">
-                <div class="section-title"><i class="fas fa-chart-line"></i> Statistics</div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="value" id="totalBikes">0</div><div class="label">Bikes</div></div>
-                    <div class="stat-card"><div class="value" id="totalCars">0</div><div class="label">Chaiwa Cars</div></div>
-                    <div class="stat-card"><div class="value" id="totalDrivers">0</div><div class="label">Active Drivers</div></div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="value" id="totalRevenue">ZMW 0</div><div class="label">Revenue</div></div>
-                    <div class="stat-card"><div class="value" id="totalRides">0</div><div class="label">Rides</div></div>
-                </div>
-            </div>
+            <div class="admin-card"><div class="section-title"><i class="fas fa-list"></i> Registered Vehicles</div><div id="adminVehiclesList"></div></div>
+            <div class="admin-card"><div class="section-title"><i class="fas fa-chart-line"></i> Statistics</div><div id="adminStats"></div></div>
         </div>
     </div>
 </div>
-
 <div id="toast" class="toast"></div>
 
 <script>
-    // ============ NORTHERN PROVINCE DATA ============
+    // ============ DATABASE ============
+    // Users: drivers and admin with secure credentials
+    let users = JSON.parse(localStorage.getItem('northern_users_secure')) || [
+        { id: 1, name: "Kelvin Banda", phone: "+260977123456", password: "driver123", role: "driver", earnings: 2450, rides: 18, rating: 4.9, online: true },
+        { id: 2, name: "Chaiwa Cars", phone: "+260977345678", password: "chaiwa123", role: "driver", earnings: 8900, rides: 567, rating: 4.9, online: true },
+        { id: 3, name: "Admin Northern", phone: "+260970000001", password: "admin123", role: "admin" }
+    ];
+    
+    // Vehicles data
+    let vehicles = JSON.parse(localStorage.getItem('northern_vehicles_secure')) || [
+        { id: 1, name: "Kelvin Banda", registration: "BCA 101", type: "bike", phone: "+260977123456", district: "kasama", lat: -10.2100, lng: 31.1800, rating: 4.9, rides: 234, online: true, earnings: 2450 },
+        { id: 2, name: "Grace Phiri", registration: "BCA 202", type: "bike", phone: "+260977234567", district: "kasama", lat: -10.2085, lng: 31.1825, rating: 4.8, rides: 187, online: true, earnings: 2100 },
+        { id: 3, name: "Chaiwa Cars", registration: "CHW 001", type: "car", phone: "+260977345678", district: "kasama", lat: -10.2120, lng: 31.1780, rating: 4.9, rides: 567, online: true, earnings: 8900, isChaiwa: true },
+        { id: 4, name: "Peter Zulu", registration: "BMB 101", type: "bike", phone: "+260977456789", district: "mbala", lat: -8.8380, lng: 31.3650, rating: 4.7, rides: 156, online: true, earnings: 1800 }
+    ];
+    
+    let rides = JSON.parse(localStorage.getItem('northern_rides_secure')) || [];
+    let currentUser = null;
+    let currentDriver = null;
+    
+    // Map variables
+    let customerMap, driverMap;
+    let customerMarkers = [];
+    let routingControl = null;
+    let currentFilter = "all";
+    let currentUserLocation = { lat: -10.2125, lng: 31.1800 };
+    let driverLocationWatch = null;
+    
     const DISTRICTS = {
         kasama: { name: "Kasama", center: { lat: -10.2125, lng: 31.1800 }, zoom: 13 },
         mbala: { name: "Mbala", center: { lat: -8.8400, lng: 31.3667 }, zoom: 13 },
@@ -712,28 +582,6 @@
         mungwi: { name: "Mungwi", center: { lat: -10.1667, lng: 31.3667 }, zoom: 13 }
     };
     
-    const CUSTOMER_PHONE = "0971130511";
-    let currentRole = "customer";
-    let currentUserLocation = { lat: -10.2125, lng: 31.1800 };
-    
-    // Vehicles Data
-    let vehicles = JSON.parse(localStorage.getItem('northern_vehicles_final')) || [
-        { id: 1, name: "Kelvin Banda", registration: "BCA 101", type: "bike", phone: "+260977123456", district: "kasama", lat: -10.2100, lng: 31.1800, rating: 4.9, rides: 234, online: true, earnings: 2450 },
-        { id: 2, name: "Grace Phiri", registration: "BCA 202", type: "bike", phone: "+260977234567", district: "kasama", lat: -10.2085, lng: 31.1825, rating: 4.8, rides: 187, online: true, earnings: 2100 },
-        { id: 3, name: "Chaiwa Cars", registration: "CHW 001", type: "car", phone: "+260977345678", district: "kasama", lat: -10.2120, lng: 31.1780, rating: 4.9, rides: 567, online: true, earnings: 8900, isChaiwa: true },
-        { id: 4, name: "Peter Zulu", registration: "BMB 101", type: "bike", phone: "+260977456789", district: "mbala", lat: -8.8380, lng: 31.3650, rating: 4.7, rides: 156, online: true, earnings: 1800 }
-    ];
-    
-    let rides = JSON.parse(localStorage.getItem('northern_rides_final')) || [];
-    let activeDriver = { id: 3, name: "Chaiwa Cars", phone: "+260977345678", online: true, currentRide: null };
-    
-    // Map variables
-    let customerMap, driverMap;
-    let customerMarkers = [], driverMarkers = [];
-    let routingControl = null;
-    let currentFilter = "all";
-    let driverLocationWatch = null;
-    
     function showToast(msg) {
         const toast = document.getElementById('toast');
         toast.textContent = msg;
@@ -742,34 +590,12 @@
     }
     
     function saveData() {
-        localStorage.setItem('northern_vehicles_final', JSON.stringify(vehicles));
-        localStorage.setItem('northern_rides_final', JSON.stringify(rides));
+        localStorage.setItem('northern_users_secure', JSON.stringify(users));
+        localStorage.setItem('northern_vehicles_secure', JSON.stringify(vehicles));
+        localStorage.setItem('northern_rides_secure', JSON.stringify(rides));
     }
     
-    // ============ ROLE SWITCHING ============
-    function switchRole(role) {
-        currentRole = role;
-        document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-        
-        document.getElementById('customerApp').classList.add('hidden');
-        document.getElementById('driverApp').classList.add('hidden');
-        document.getElementById('adminPanel').classList.add('hidden');
-        
-        if (role === 'customer') {
-            document.getElementById('customerApp').classList.remove('hidden');
-            initCustomerMap();
-        } else if (role === 'driver') {
-            document.getElementById('driverApp').classList.remove('hidden');
-            initDriverApp();
-        } else if (role === 'admin') {
-            document.getElementById('adminPanel').classList.remove('hidden');
-            renderVehiclesListAdmin();
-            updateAdminStats();
-        }
-    }
-    
-    // ============ CUSTOMER APP ============
+    // ============ CUSTOMER MAP (WORKING NOW) ============
     function initCustomerMap() {
         if (customerMap) return;
         customerMap = L.map('customerMap').setView([currentUserLocation.lat, currentUserLocation.lng], 8);
@@ -780,10 +606,11 @@
         // Add customer marker
         L.marker([currentUserLocation.lat, currentUserLocation.lng], {
             icon: L.divIcon({ html: '<div style="background:#3b82f6; border-radius:50%; padding:10px; color:white;"><i class="fas fa-user"></i></div>', iconSize: [38,38] })
-        }).addTo(customerMap).bindPopup('You are here');
+        }).addTo(customerMap).bindPopup('Your location');
         
         updateCustomerVehicles();
         setInterval(updateCustomerVehicles, 10000);
+        showToast('Map loaded - Finding nearby vehicles...');
     }
     
     function updateCustomerVehicles() {
@@ -791,26 +618,28 @@
         customerMarkers.forEach(m => customerMap.removeLayer(m));
         customerMarkers = [];
         
-        let filtered = vehicles.filter(v => v.online);
+        let filtered = vehicles.filter(v => v.online === true);
         if (currentFilter !== 'all') filtered = filtered.filter(v => v.type === currentFilter);
         
-        document.getElementById('nearbyCount').innerHTML = filtered.filter(v => v.type === 'bike').length;
+        document.getElementById('bikeCount').innerHTML = filtered.filter(v => v.type === 'bike').length;
         document.getElementById('carCount').innerHTML = filtered.filter(v => v.type === 'car').length;
         
         filtered.forEach(v => {
             const dist = Math.hypot(v.lat - currentUserLocation.lat, v.lng - currentUserLocation.lng) * 111;
-            const icon = L.divIcon({
-                html: `<div style="background:${v.type === 'bike' ? '#0f3b2c' : '#f5b042'}; border-radius:50%; padding:8px; color:white;"><i class="fas ${v.type === 'bike' ? 'fa-motorcycle' : 'fa-car'}"></i><div style="font-size:8px;">${dist.toFixed(1)}km</div></div>`,
+            const color = v.type === 'bike' ? '#0f3b2c' : '#f5b042';
+            const icon = v.type === 'bike' ? 'fa-motorcycle' : 'fa-car';
+            const markerIcon = L.divIcon({
+                html: `<div style="background:${color}; border-radius:50%; padding:8px; color:white; width:38px; text-align:center;"><i class="fas ${icon}"></i><div style="font-size:8px;">${dist.toFixed(1)}km</div></div>`,
                 iconSize: [38,38]
             });
-            const marker = L.marker([v.lat, v.lng], { icon }).addTo(customerMap)
-                .bindPopup(`<strong>${v.name}</strong><br>${v.registration}<br>📞 ${v.phone}<br>⭐ ${v.rating}<br>📍 ${dist.toFixed(1)}km<br><button onclick="callDriver('${v.phone}')" style="background:#22c55e; color:white; border:none; padding:5px 10px; border-radius:15px;">Call</button> <button onclick="smsDriver('${v.phone}','${v.name}')" style="background:#3b82f6; color:white; border:none; padding:5px 10px; border-radius:15px;">SMS</button>`);
+            const marker = L.marker([v.lat, v.lng], { icon: markerIcon }).addTo(customerMap)
+                .bindPopup(`<strong>${v.name}</strong><br>${v.registration}<br>📞 ${v.phone}<br>⭐ ${v.rating}<br>📍 ${dist.toFixed(1)}km<br><button onclick="callDriver('${v.phone}')" style="background:#22c55e; color:white; border:none; padding:5px 10px; border-radius:15px; margin-top:5px;">Call Driver</button>`);
             customerMarkers.push(marker);
         });
         
-        const container = document.getElementById('vehiclesListContainer');
+        const container = document.getElementById('vehiclesList');
         if (filtered.length === 0) container.innerHTML = '<div style="text-align:center; padding:20px;">No vehicles available</div>';
-        else container.innerHTML = filtered.map(v => `<div class="vehicle-item" onclick="focusOnVehicle(${v.lat},${v.lng})"><div class="vehicle-info"><div class="vehicle-avatar"><i class="fas ${v.type === 'bike' ? 'fa-motorcycle' : 'fa-car'}"></i></div><div><strong>${v.name}</strong><br><small>${v.registration}</small></div></div><div class="distance-badge">${Math.hypot(v.lat - currentUserLocation.lat, v.lng - currentUserLocation.lng) * 111}</div></div>`).join('');
+        else container.innerHTML = filtered.map(v => `<div class="vehicle-item" onclick="focusVehicle(${v.lat},${v.lng})"><div class="vehicle-info"><div class="vehicle-avatar"><i class="fas ${v.type === 'bike' ? 'fa-motorcycle' : 'fa-car'}"></i></div><div><strong>${v.name}</strong><br><small>${v.registration}</small></div></div><div class="distance-badge">${Math.hypot(v.lat - currentUserLocation.lat, v.lng - currentUserLocation.lng) * 111}</div></div>`).join('');
     }
     
     function requestRide() {
@@ -820,34 +649,27 @@
         let available = vehicles.filter(v => v.online);
         if (type !== 'all') available = available.filter(v => v.type === type);
         if (available.length === 0) { showToast('No vehicles available!'); return; }
-        
         const selected = available[0];
         const fare = type === 'bike' ? Math.floor(20 + Math.random() * 20) : Math.floor(45 + Math.random() * 40);
-        
-        const ride = { id: Date.now(), rideNumber: `NP${Date.now()}`, customerPhone: CUSTOMER_PHONE, pickup, dropoff, fare, type, driverId: selected.id, driverName: selected.name, driverPhone: selected.phone, status: 'pending', createdAt: new Date().toISOString() };
+        const ride = { id: Date.now(), rideNumber: `NP${Date.now()}`, pickup, dropoff, fare, type, driverId: selected.id, driverName: selected.name, driverPhone: selected.phone, status: 'pending', createdAt: new Date().toISOString() };
         rides.push(ride);
         saveData();
-        
-        // Notify driver (simulated)
         showToast(`Ride requested! Driver: ${selected.name} will be notified`);
-        
         const panel = document.getElementById('tripPanel');
         panel.style.display = 'block';
-        panel.innerHTML = `<h4>Ride Requested!</h4><p>Driver: ${selected.name}<br>Amount: ZMW ${fare}</p><button class="btn-primary" style="background:#22c55e" onclick="processPayment('${ride.id}')">Pay with MTN</button><button class="btn-primary" style="background:#ef4444; margin-top:8px" onclick="document.getElementById('tripPanel').style.display='none'">Cancel</button>`;
-        
-        // Show route
+        panel.innerHTML = `<h4>Ride Requested!</h4><p>Driver: ${selected.name}<br>Amount: ZMW ${fare}</p><button class="btn-primary" style="background:#22c55e" onclick="payForRide('${ride.id}')">Pay with MTN</button><button class="btn-primary" style="background:#ef4444; margin-top:8px" onclick="document.getElementById('tripPanel').style.display='none'">Cancel</button>`;
         if (routingControl) customerMap.removeControl(routingControl);
         routingControl = L.Routing.control({ waypoints: [L.latLng(currentUserLocation.lat, currentUserLocation.lng), L.latLng(selected.lat, selected.lng)], routeWhileDragging: false, lineOptions: { styles: [{ color: '#0f3b2c', weight: 4 }] } }).addTo(customerMap);
     }
     
-    function processPayment(rideId) {
-        const mtn = prompt('Enter MTN number:', '0971XXXXXX');
+    function payForRide(rideId) {
+        const mtn = prompt('Enter MTN Mobile Money number:', '0971XXXXXX');
         if (!mtn) return;
         const ride = rides.find(r => r.id == rideId);
-        if (ride) { ride.status = 'confirmed'; saveData(); document.getElementById('tripPanel').innerHTML = `<h4><i class="fas fa-check-circle" style="color:#22c55e"></i> Payment Successful!</h4><p>${ride.driverName} is coming!</p><button class="btn-primary" onclick="completeRide('${ride.id}')">Complete Ride</button>`; showToast('Driver notified!'); }
+        if (ride) { ride.status = 'confirmed'; saveData(); document.getElementById('tripPanel').innerHTML = `<h4><i class="fas fa-check-circle" style="color:#22c55e"></i> Payment Success!</h4><p>${ride.driverName} is coming!</p><button class="btn-primary" onclick="completeCustomerRide('${ride.id}')">Complete Ride</button>`; showToast('Driver notified!'); }
     }
     
-    function completeRide(rideId) {
+    function completeCustomerRide(rideId) {
         const ride = rides.find(r => r.id == rideId);
         if (ride) { ride.status = 'completed'; saveData(); document.getElementById('tripPanel').style.display = 'none'; if (routingControl) customerMap.removeControl(routingControl); showToast('Ride completed! Thank you!'); }
     }
@@ -858,76 +680,96 @@
         showToast(`${d.name} District`);
     }
     
-    function showAllVehicles() { currentFilter = 'all'; document.getElementById('vehicleType').value = 'all'; updateCustomerVehicles(); }
-    function showCars() { currentFilter = 'car'; document.getElementById('vehicleType').value = 'car'; updateCustomerVehicles(); }
-    function filterVehicles() { currentFilter = document.getElementById('vehicleType').value; updateCustomerVehicles(); }
-    function centerOnProvince() { if (customerMap) customerMap.setView([-10.2125, 31.1800], 8); }
-    function focusOnVehicle(lat, lng) { if (customerMap) customerMap.setView([lat, lng], 16); }
+    function filterBikes() { currentFilter = 'bike'; updateCustomerVehicles(); }
+    function filterCars() { currentFilter = 'car'; updateCustomerVehicles(); }
+    function centerMap() { if (customerMap) customerMap.setView([-10.2125, 31.1800], 8); }
+    function focusVehicle(lat, lng) { if (customerMap) customerMap.setView([lat, lng], 16); }
     function callDriver(phone) { window.location.href = `tel:${phone}`; }
-    function smsDriver(phone, name) { window.location.href = `sms:${phone}?body=Hello ${name}, I need a ride!`; }
     
-    function customerSwitchTab(tab) {
+    function switchTab(tab) {
         if (tab === 'rides') {
-            const userRides = rides.filter(r => r.customerPhone === CUSTOMER_PHONE);
+            const userRides = rides;
             const panel = document.getElementById('tripPanel');
             panel.style.display = 'block';
-            panel.innerHTML = `<h4>My Rides</h4>${userRides.length === 0 ? '<p>No rides yet</p>' : userRides.slice(-5).reverse().map(r => `<div><strong>${r.rideNumber}</strong><br>${r.pickup} → ${r.dropoff}<br>ZMW ${r.fare} • ${r.status}</div>`).join('')}<button class="btn-primary" onclick="document.getElementById('tripPanel').style.display='none'">Close</button>`;
+            panel.innerHTML = `<h4>Recent Rides</h4>${userRides.length === 0 ? '<p>No rides yet</p>' : userRides.slice(-5).reverse().map(r => `<div style="padding:8px; border-bottom:1px solid #eee;"><strong>${r.rideNumber}</strong><br>${r.pickup} → ${r.dropoff}<br>ZMW ${r.fare} • ${r.status}</div>`).join('')}<button class="btn-primary" onclick="document.getElementById('tripPanel').style.display='none'">Close</button>`;
         } else if (tab === 'home') { document.getElementById('tripPanel').style.display = 'none'; if (routingControl) customerMap.removeControl(routingControl); }
-        else if (tab === 'support') {
-            document.getElementById('tripPanel').style.display = 'block';
-            document.getElementById('tripPanel').innerHTML = `<h4>Support</h4><p><a href="tel:+260977123456">📞 +260 97 712 3456</a><br><a href="https://wa.me/260977123456">💬 WhatsApp</a><br>Your number: ${CUSTOMER_PHONE}</p><button class="btn-primary" onclick="document.getElementById('tripPanel').style.display='none'">Close</button>`;
+        else if (tab === 'support') { document.getElementById('tripPanel').style.display = 'block'; document.getElementById('tripPanel').innerHTML = `<h4>Support</h4><p><a href="tel:+260977123456">📞 Call Support</a><br><a href="https://wa.me/260977123456">💬 WhatsApp</a></p><button class="btn-primary" onclick="document.getElementById('tripPanel').style.display='none'">Close</button>`; }
+    }
+    
+    // ============ SECURE LOGIN ============
+    function showDriverLogin() {
+        document.getElementById('customerApp').classList.add('hidden');
+        document.getElementById('loginScreen').classList.remove('hidden');
+    }
+    
+    function closeLogin() {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('customerApp').classList.remove('hidden');
+    }
+    
+    function processLogin() {
+        const phone = document.getElementById('loginPhone').value;
+        const password = document.getElementById('loginPassword').value;
+        const role = document.getElementById('loginRole').value;
+        
+        const user = users.find(u => u.phone === phone && u.password === password && u.role === role);
+        if (!user) { showToast('Invalid credentials!'); return; }
+        
+        currentUser = user;
+        if (role === 'driver') {
+            currentDriver = user;
+            loadDriverApp();
+        } else if (role === 'admin') {
+            loadAdminApp();
         }
     }
     
     // ============ DRIVER APP ============
-    function initDriverApp() {
-        if (driverMap) return;
-        driverMap = L.map('driverMap').setView([-10.2125, 31.1800], 13);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(driverMap);
+    function loadDriverApp() {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('driverApp').classList.remove('hidden');
+        document.getElementById('customerApp').classList.add('hidden');
         
-        document.getElementById('driverNameDisplay').innerHTML = activeDriver.name;
-        document.getElementById('driverEarnings').innerHTML = `ZMW ${activeDriver.earnings || 2450}`;
+        document.getElementById('driverNameDisplay').innerHTML = currentDriver.name;
+        document.getElementById('driverEarnings').innerHTML = `ZMW ${currentDriver.earnings}`;
+        document.getElementById('driverRides').innerHTML = currentDriver.rides;
+        document.getElementById('driverRating').innerHTML = currentDriver.rating;
         
-        startDriverLocationTracking();
+        initDriverMap();
+        startDriverTracking();
         updateRideRequests();
         setInterval(updateRideRequests, 5000);
+    }
+    
+    function initDriverMap() {
+        if (driverMap) return;
+        driverMap = L.map('driverMap').setView([currentUserLocation.lat, currentUserLocation.lng], 13);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(driverMap);
         
-        // Add driver marker
         const driverIcon = L.divIcon({ html: '<div style="background:#f5b042; border-radius:50%; padding:10px; color:white;"><i class="fas fa-car"></i><div style="font-size:8px;">YOU</div></div>', iconSize: [38,38] });
         L.marker([currentUserLocation.lat, currentUserLocation.lng], { icon: driverIcon }).addTo(driverMap).bindPopup('Your location');
     }
     
-    function startDriverLocationTracking() {
+    function startDriverTracking() {
         if (navigator.geolocation) {
             driverLocationWatch = navigator.geolocation.watchPosition(pos => {
                 currentUserLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
                 if (driverMap) driverMap.setView([currentUserLocation.lat, currentUserLocation.lng], 15);
-                // Update driver position in vehicles data
-                const driverVehicle = vehicles.find(v => v.name === activeDriver.name);
+                const driverVehicle = vehicles.find(v => v.name === currentDriver.name);
                 if (driverVehicle) { driverVehicle.lat = currentUserLocation.lat; driverVehicle.lng = currentUserLocation.lng; saveData(); }
             }, null, { enableHighAccuracy: true });
         }
     }
     
-    function toggleDriverOnline() {
-        activeDriver.online = !activeDriver.online;
-        const badge = document.getElementById('driverStatusBadge');
-        const statusSpan = document.getElementById('driverOnlineStatus');
-        if (activeDriver.online) {
-            badge.innerHTML = '🔴 Go Offline';
-            statusSpan.innerHTML = '🟢 ONLINE';
-            statusSpan.className = 'live-badge';
-            showToast('You are now ONLINE. Ready to receive rides!');
-        } else {
-            badge.innerHTML = '🟢 Go Online';
-            statusSpan.innerHTML = '⚫ OFFLINE';
-            statusSpan.style.background = '#ef4444';
-            showToast('You are now OFFLINE');
-        }
-        // Update vehicle status
-        const driverVehicle = vehicles.find(v => v.name === activeDriver.name);
-        if (driverVehicle) driverVehicle.online = activeDriver.online;
+    function toggleOnline() {
+        currentDriver.online = !currentDriver.online;
+        const btn = document.getElementById('onlineToggleBtn');
+        if (currentDriver.online) { btn.innerHTML = '🟢 Online'; showToast('You are now ONLINE'); }
+        else { btn.innerHTML = '⚫ Offline'; showToast('You are now OFFLINE'); }
+        const driverVehicle = vehicles.find(v => v.name === currentDriver.name);
+        if (driverVehicle) driverVehicle.online = currentDriver.online;
         saveData();
+        updateCustomerVehicles();
     }
     
     function updateRideRequests() {
@@ -935,128 +777,106 @@
         document.getElementById('requestCount').innerHTML = pendingRides.length;
         const container = document.getElementById('rideRequestsList');
         if (pendingRides.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px;">No ride requests</div>'; return; }
-        container.innerHTML = pendingRides.map(ride => `
-            <div class="ride-request-item" onclick="acceptRide('${ride.id}')">
-                <div class="ride-info">
-                    <div class="vehicle-avatar"><i class="fas fa-user"></i></div>
-                    <div><strong>${ride.pickup}</strong><br><small>→ ${ride.dropoff} • ZMW ${ride.fare}</small></div>
-                </div>
-                <button class="btn-primary" style="padding:6px 12px; font-size:0.7rem;">Accept</button>
-            </div>
-        `).join('');
+        container.innerHTML = pendingRides.map(ride => `<div class="ride-request-item" onclick="acceptRide('${ride.id}')"><div class="vehicle-info"><div class="vehicle-avatar"><i class="fas fa-user"></i></div><div><strong>${ride.pickup}</strong><br><small>→ ${ride.dropoff} • ZMW ${ride.fare}</small></div></div><button class="btn-primary" style="padding:6px 12px;">Accept</button></div>`).join('');
     }
     
     function acceptRide(rideId) {
         const ride = rides.find(r => r.id == rideId);
         if (!ride) return;
         ride.status = 'accepted';
-        ride.driverId = activeDriver.id;
-        ride.driverName = activeDriver.name;
-        activeDriver.currentRide = ride;
+        ride.driverId = currentDriver.id;
+        ride.driverName = currentDriver.name;
         saveData();
-        
         showToast(`Ride accepted! Pickup: ${ride.pickup}`);
         updateRideRequests();
-        showActiveRide(ride);
-        
-        // Show route to customer
-        if (routingControl) driverMap.removeControl(routingControl);
-        const customerVehicle = vehicles.find(v => v.name === ride.driverName) || { lat: currentUserLocation.lat, lng: currentUserLocation.lng };
-        routingControl = L.Routing.control({ waypoints: [L.latLng(currentUserLocation.lat, currentUserLocation.lng), L.latLng(customerVehicle.lat, customerVehicle.lng)], routeWhileDragging: true, lineOptions: { styles: [{ color: '#22c55e', weight: 5 }] } }).addTo(driverMap);
-    }
-    
-    function showActiveRide(ride) {
         document.getElementById('activeRideCard').style.display = 'block';
-        document.getElementById('activeRideInfo').innerHTML = `
-            <div class="input-group"><i class="fas fa-user"></i><span>Customer: ${ride.customerPhone}</span></div>
-            <div class="input-group"><i class="fas fa-map-pin"></i><span>Pickup: ${ride.pickup}</span></div>
-            <div class="input-group"><i class="fas fa-flag-checkered"></i><span>Dropoff: ${ride.dropoff}</span></div>
-            <div class="input-group"><i class="fas fa-money-bill"></i><span>Fare: ZMW ${ride.fare}</span></div>
-        `;
+        document.getElementById('activeRideInfo').innerHTML = `<div class="input-group"><i class="fas fa-user"></i><span>Customer: ${ride.customerPhone || 'Anonymous'}</span></div><div class="input-group"><i class="fas fa-map-pin"></i><span>Pickup: ${ride.pickup}</span></div><div class="input-group"><i class="fas fa-flag-checkered"></i><span>Dropoff: ${ride.dropoff}</span></div><div class="input-group"><i class="fas fa-money-bill"></i><span>Fare: ZMW ${ride.fare}</span></div>`;
+        if (routingControl) driverMap.removeControl(routingControl);
+        routingControl = L.Routing.control({ waypoints: [L.latLng(currentUserLocation.lat, currentUserLocation.lng), L.latLng(currentUserLocation.lat + 0.005, currentUserLocation.lng + 0.005)], routeWhileDragging: true, lineOptions: { styles: [{ color: '#22c55e', weight: 5 }] } }).addTo(driverMap);
     }
     
     function updateRideStatus(status) {
-        if (!activeDriver.currentRide) return;
-        const ride = activeDriver.currentRide;
-        if (status === 'arrived') { ride.status = 'arrived'; showToast('You have arrived at customer location'); }
-        else if (status === 'started') { ride.status = 'started'; showToast('Ride started! Navigating to destination'); }
-        else if (status === 'completed') { 
-            ride.status = 'completed'; 
-            activeDriver.earnings = (activeDriver.earnings || 0) + ride.fare;
-            document.getElementById('driverEarnings').innerHTML = `ZMW ${activeDriver.earnings}`;
-            showToast(`Ride completed! Earned ZMW ${ride.fare}`);
-            document.getElementById('activeRideCard').style.display = 'none';
-            activeDriver.currentRide = null;
-            if (routingControl) driverMap.removeControl(routingControl);
-        }
+        const activeRide = rides.find(r => r.driverId === currentDriver?.id && r.status !== 'completed');
+        if (!activeRide) return;
+        if (status === 'arrived') { activeRide.status = 'arrived'; showToast('Arrived at customer location'); }
+        else if (status === 'started') { activeRide.status = 'started'; showToast('Ride started!'); }
+        else if (status === 'completed') { activeRide.status = 'completed'; currentDriver.earnings += activeRide.fare; currentDriver.rides += 1; document.getElementById('driverEarnings').innerHTML = `ZMW ${currentDriver.earnings}`; document.getElementById('driverRides').innerHTML = currentDriver.rides; showToast(`Ride completed! Earned ZMW ${activeRide.fare}`); document.getElementById('activeRideCard').style.display = 'none'; if (routingControl) driverMap.removeControl(routingControl); }
         saveData();
     }
     
-    function centerOnMyLocation() { if (driverMap) driverMap.setView([currentUserLocation.lat, currentUserLocation.lng], 16); showToast('Centered on your location'); }
-    function showNearbyCustomers() { showToast('Showing nearby customers on map'); }
-    function driverSwitchTab(tab) {
-        if (tab === 'history') {
-            const driverRides = rides.filter(r => r.driverName === activeDriver.name);
-            showToast(`${driverRides.length} rides completed`);
-        } else if (tab === 'earnings') {
-            showToast(`Total earnings: ZMW ${activeDriver.earnings}`);
-        }
+    function logoutDriver() {
+        if (driverLocationWatch) navigator.geolocation.clearWatch(driverLocationWatch);
+        currentUser = null;
+        currentDriver = null;
+        document.getElementById('driverApp').classList.add('hidden');
+        document.getElementById('adminApp').classList.add('hidden');
+        document.getElementById('customerApp').classList.remove('hidden');
+        showToast('Logged out successfully');
     }
     
-    // ============ ADMIN FUNCTIONS ============
+    // ============ ADMIN APP ============
+    function loadAdminApp() {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('adminApp').classList.remove('hidden');
+        document.getElementById('customerApp').classList.add('hidden');
+        renderAdminVehicles();
+        updateAdminStats();
+    }
+    
     function registerVehicle() {
-        const reg = document.getElementById('regNumber').value;
-        const name = document.getElementById('driverName').value;
-        const phone = document.getElementById('driverPhone').value;
+        const reg = document.getElementById('regNum').value;
+        const name = document.getElementById('driverFullName').value;
+        const phone = document.getElementById('driverPhoneNum').value;
+        const pwd = document.getElementById('driverPassword').value;
         const type = document.getElementById('vehicleTypeReg').value;
         const districtId = document.getElementById('vehicleDistrict').value;
         if (!reg || !name) { showToast('Fill required fields'); return; }
         const district = DISTRICTS[districtId];
         const newVehicle = { id: vehicles.length + 1, name, registration: reg, type, phone, district: districtId, lat: district.center.lat + (Math.random() - 0.5) * 0.03, lng: district.center.lng + (Math.random() - 0.5) * 0.03, rating: 5.0, rides: 0, online: true, earnings: 0, isChaiwa: type === 'car' };
         vehicles.push(newVehicle);
+        users.push({ id: users.length + 1, name, phone, password: pwd, role: 'driver', earnings: 0, rides: 0, rating: 5.0, online: true });
         saveData();
-        renderVehiclesListAdmin();
+        renderAdminVehicles();
         updateAdminStats();
         showToast(`✅ ${reg} registered in ${district.name}`);
-        document.getElementById('regNumber').value = ''; document.getElementById('driverName').value = ''; document.getElementById('driverPhone').value = '';
+        document.getElementById('regNum').value = ''; document.getElementById('driverFullName').value = ''; document.getElementById('driverPhoneNum').value = '';
     }
     
-    function renderVehiclesListAdmin() {
-        const container = document.getElementById('vehiclesListAdmin');
-        container.innerHTML = vehicles.map(v => `<div class="driver-item"><div><strong>${v.registration}</strong><br>${v.name}<br>${DISTRICTS[v.district]?.name}</div><div><span class="${v.online ? 'status-online' : 'status-offline'}">${v.online ? '🟢' : '⚫'}</span><br><button onclick="toggleVehicleStatus(${v.id})" style="background:#f5b042; border:none; padding:4px 8px; border-radius:15px; margin-top:4px;">Toggle</button></div></div>`).join('');
+    function renderAdminVehicles() {
+        const container = document.getElementById('adminVehiclesList');
+        container.innerHTML = vehicles.map(v => `<div class="driver-item"><div><strong>${v.registration}</strong><br>${v.name}<br>${DISTRICTS[v.district]?.name}</div><div><span>${v.online ? '🟢' : '⚫'}</span><br><button onclick="toggleVehicle(${v.id})" style="background:#f5b042; border:none; padding:4px 8px; border-radius:15px;">Toggle</button></div></div>`).join('');
     }
     
-    function toggleVehicleStatus(id) { const v = vehicles.find(v => v.id === id); if (v) { v.online = !v.online; saveData(); renderVehiclesListAdmin(); updateCustomerVehicles(); showToast(`${v.name} ${v.online ? 'online' : 'offline'}`); } }
-    function updateAdminStats() { document.getElementById('totalBikes').innerHTML = vehicles.filter(v => v.type === 'bike').length; document.getElementById('totalCars').innerHTML = vehicles.filter(v => v.type === 'car').length; document.getElementById('totalDrivers').innerHTML = vehicles.filter(v => v.online).length; document.getElementById('totalRevenue').innerHTML = `ZMW ${rides.reduce((s,r)=> s + (r.fare||0),0)}`; document.getElementById('totalRides').innerHTML = rides.length; }
-    function closeAdminPanel() { switchRole('customer'); }
+    function toggleVehicle(id) { const v = vehicles.find(v => v.id === id); if (v) { v.online = !v.online; saveData(); renderAdminVehicles(); updateCustomerVehicles(); showToast(`${v.name} ${v.online ? 'online' : 'offline'}`); } }
+    
+    function updateAdminStats() {
+        document.getElementById('adminStats').innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="value">${vehicles.filter(v => v.type === 'bike').length}</div><div class="label">Bikes</div></div><div class="stat-card"><div class="value">${vehicles.filter(v => v.type === 'car').length}</div><div class="label">Chaiwa Cars</div></div><div class="stat-card"><div class="value">${vehicles.filter(v => v.online).length}</div><div class="label">Active</div></div></div><div class="stats-grid"><div class="stat-card"><div class="value">ZMW ${rides.reduce((s,r)=> s + (r.fare||0),0)}</div><div class="label">Revenue</div></div><div class="stat-card"><div class="value">${rides.length}</div><div class="label">Total Rides</div></div></div>`;
+    }
     
     // Make global functions available
-    window.switchRole = switchRole;
     window.selectDistrict = selectDistrict;
-    window.showAllVehicles = showAllVehicles;
-    window.showCars = showCars;
-    window.filterVehicles = filterVehicles;
-    window.centerOnProvince = centerOnProvince;
-    window.focusOnVehicle = focusOnVehicle;
+    window.filterBikes = filterBikes;
+    window.filterCars = filterCars;
+    window.centerMap = centerMap;
+    window.focusVehicle = focusVehicle;
     window.callDriver = callDriver;
-    window.smsDriver = smsDriver;
     window.requestRide = requestRide;
-    window.processPayment = processPayment;
-    window.completeRide = completeRide;
-    window.customerSwitchTab = customerSwitchTab;
-    window.toggleDriverOnline = toggleDriverOnline;
+    window.payForRide = payForRide;
+    window.completeCustomerRide = completeCustomerRide;
+    window.switchTab = switchTab;
+    window.showDriverLogin = showDriverLogin;
+    window.closeLogin = closeLogin;
+    window.processLogin = processLogin;
+    window.toggleOnline = toggleOnline;
     window.acceptRide = acceptRide;
     window.updateRideStatus = updateRideStatus;
-    window.centerOnMyLocation = centerOnMyLocation;
-    window.showNearbyCustomers = showNearbyCustomers;
-    window.driverSwitchTab = driverSwitchTab;
+    window.logoutDriver = logoutDriver;
     window.registerVehicle = registerVehicle;
-    window.toggleVehicleStatus = toggleVehicleStatus;
-    window.closeAdminPanel = closeAdminPanel;
+    window.toggleVehicle = toggleVehicle;
     
     // Initialize
     initCustomerMap();
-    showToast(`Welcome to Northern Province Rides! | Chaiwa Cars Available | Your number: ${CUSTOMER_PHONE}`);
+    showToast('Welcome to Northern Province Rides! Map is loading...');
 </script>
 </body>
 </html>
